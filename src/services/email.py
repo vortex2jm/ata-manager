@@ -1,12 +1,13 @@
-import smtplib
-import email.message
 from dotenv import load_dotenv
+import email.message
+import smtplib
 import os
 
 load_dotenv()
 
 APP_PASSWORD = os.getenv("APP_PASSWORD")
 
+# ===============================================
 def get_body(student_name, writer_name, ata_link):
     body = f"""
     <h3>Boa tarde, {student_name}!</h3> 
@@ -22,9 +23,8 @@ def get_body(student_name, writer_name, ata_link):
         return body_ata_writer
     return body
 
-
+# ===============================================
 def send_email(body, sender, receiver):  
-    
     msg = email.message.Message()
     msg['Subject'] = "Ata - Reunião Pet EngComp"
     msg['From'] = sender
@@ -40,8 +40,16 @@ def send_email(body, sender, receiver):
     s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
     print(f'Email enviado para {receiver}')
 
-
+# =====================================================
 def send_emails(students, writer_name, ata_link, sender):
     for student in students:
-        body = get_body(student['name'], writer_name, ata_link)
-        send_email(body, sender, student['email'])
+        try:
+            body = get_body(student['name'], writer_name, ata_link)
+            send_email(body, sender, student['email'])
+        except:
+            print(f"Could not sent email to {student['email']}. Trying again!")
+            try:
+                body = get_body(student['name'], writer_name, ata_link)
+                send_email(body, sender, student['email'])
+            except:
+                print("Failure. Going to next email!")
