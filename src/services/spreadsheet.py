@@ -2,7 +2,6 @@ from googleapiclient.errors import HttpError
 import schedule
 
 class Spreadsheet:
-
   # ===============================================
   def __init__(self, service, spreadsheet_id, range):
     self.service = service
@@ -44,7 +43,7 @@ class Spreadsheet:
   #Retorna todos os emails
   def get_students(self):
     students = []
-    content = self.__get_content(self.spreadsheetId, self.range)
+    content = self.content
     for person in content:
       students.append({'name': person[0],'email':person[2]})
 
@@ -54,17 +53,16 @@ class Spreadsheet:
   # ===============================================
   #Retorna o horário da reunião
   def get_time(self):
-    content = self.__get_content(self.spreadsheetId, self.range)
+    content = self.content
     time = content[1][4].split(":")
     hour = int(time[0])
-    hour -= 2 #Este parametro pode ser modificavel dependendo da regiao
+    # hour -= 2 #Este parametro pode ser modificavel dependendo da regiao
     return f"{hour}:{time[1]}"
 
   # ===============================================
   def schedule_job(self, main):
-    content = self.__get_content(self.spreadsheetId, self.range)
-    day = content[1][5]
     content = self.content
+    day = content[1][5]
     if(day == 'segunda-feira'):
       schedule.every().monday.at(self.get_time()).do(main)
     elif(day == 'terça-feira'):
@@ -78,7 +76,7 @@ class Spreadsheet:
 
   # ===============================================
   def get_todays_writer(self):
-    matrix = self.__get_content(self.spreadsheetId, self.range)
+    matrix = self.content
     matrix.pop(0)
 
     for i,person in enumerate(matrix):

@@ -50,4 +50,4 @@ if __name__ == '__main__':
     spreadsheet.schedule_job(main)    
     while True:
         schedule.run_pending()
-        time.sleep(1)
+        time.sleep(5)
