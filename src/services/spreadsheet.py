@@ -63,6 +63,7 @@ class Spreadsheet:
   def schedule_job(self, main):
     content = self.content
     day = content[1][5]
+    print(f"Day: {day}")
     if(day == 'segunda-feira'):
       schedule.every().monday.at(self.get_time()).do(main)
     elif(day == 'terça-feira'):

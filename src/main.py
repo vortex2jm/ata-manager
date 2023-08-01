@@ -28,6 +28,9 @@ drive = Drive(drive_service)
 spreadsheet = Spreadsheet(spread_service, SPREADSHEET_ID, RANGE)
 
 def main():
+    print("Release time:", release_time)
+    print("Current time:", current_time)
+    
     print("Running script!")
     ata_link = drive.copy_weekly_ata(ATA_MAIN_FOLDER_ID)
     students = spreadsheet.get_students()
