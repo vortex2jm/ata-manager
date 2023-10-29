@@ -74,6 +74,10 @@ class Spreadsheet:
       schedule.every().thursday.at(self.get_time()).do(main)
     elif(day == 'sexta-feira'):
       schedule.every().friday.at(self.get_time()).do(main)
+    elif (day == "sábado"):
+      schedule.every().saturday.at(self.get_time()).do(main)
+    elif (day == "domingo"):
+      schedule.every().sunday.at(self.get_time()).do(main)
 
   # ===============================================
   def get_todays_writer(self):
